@@ -1,30 +1,100 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div id="app-wrapper">
+    <header>
+      <h1>Random Quote Generator</h1>
+    </header>
+
+    <main>
+      <!-- Display the Quote Section -->
+      <QuoteDisplay />
+
+      <!-- Display the Controls (button) Section -->
+      <QuoteControls />
+    </main>
+
+    <footer>
+      <!-- *** CHANGED: Update attribution *** -->
+      <p>Quotes provided by <a href="https://api-ninjas.com/" target="_blank" rel="noopener noreferrer">API-Ninjas.com</a></p>
+    </footer>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<script setup>
+// Import the components we created
+import QuoteDisplay from './components/QuoteDisplay.vue';
+import QuoteControls from './components/QuoteControls.vue';
+
+// We can also trigger an initial quote fetch when the app loads if desired
+// Uncomment the lines below to fetch a quote immediately:
+/*
+import { onMounted } from 'vue';
+import { useQuoteStore } from './stores/quoteStore';
+
+const store = useQuoteStore();
+onMounted(() => {
+  // Optional: Check if a quote already exists before fetching
+  // if (!store.hasQuote) {
+  //  store.fetchRandomQuote();
+  // }
+  store.fetchRandomQuote(); // Fetch a quote as soon as the component mounts
+});
+*/
+
+</script>
+
+<style>
+/* Global styles - applying to elements inside App.vue and potentially child components */
+#app-wrapper {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+header h1 {
+  color: #2c3e50;
+  font-weight: 600;
 }
+
+main {
+  /* Styles for the main content area if needed */
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  font-size: 0.9em;
+  color: #777;
+}
+
+footer a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* You might want to reset some browser defaults in src/assets/main.css */
+/* For example:
+body {
+  background-color: #f4f7f6;
+  margin: 0;
+  padding: 0;
+}
+*/
 </style>
