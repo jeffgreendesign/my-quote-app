@@ -15,6 +15,7 @@
     <footer>
       <!-- *** CHANGED: Update attribution *** -->
       <p>Quotes provided by <a href="https://api-ninjas.com/" target="_blank" rel="noopener noreferrer">API-Ninjas.com</a></p>
+      <p>An experiment by <a href="https://hirejeffgreen.com" target="_blank" rel="noopener noreferrer">Jeff Green</a></p>
     </footer>
   </div>
 </template>
