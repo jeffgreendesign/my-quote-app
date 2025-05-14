@@ -13,9 +13,8 @@
     </main>
 
     <footer>
-      <!-- *** CHANGED: Update attribution *** -->
       <p>Quotes provided by <a href="https://api-ninjas.com/" target="_blank" rel="noopener noreferrer">API-Ninjas.com</a></p>
-      <p>An experiment by <a href="https://hirejeffgreen.com" target="_blank" rel="noopener noreferrer">Jeff Green</a></p>
+      <p>An experiment by <a href="https://hirejeffgreen.com" target="_blank" rel="noopener noreferrer">Jeff Green</a>. This project is developed with Vite, Vue.js, and Pinia. Hosted on Netlify.</p>
     </footer>
   </div>
 </template>
@@ -68,10 +67,6 @@ header h1 {
   font-weight: 600;
 }
 
-main {
-  /* Styles for the main content area if needed */
-}
-
 footer {
   text-align: center;
   margin-top: 30px;
@@ -89,13 +84,4 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
-
-/* You might want to reset some browser defaults in src/assets/main.css */
-/* For example:
-body {
-  background-color: #f4f7f6;
-  margin: 0;
-  padding: 0;
-}
-*/
 </style>
