@@ -19,11 +19,11 @@ A simple web application built with Vue.js 3 and Pinia for state management that
 - **API:** [API-Ninjas Quotes API](https://api-ninjas.com/api/quotes)
 - **HTTP Requests:** Native Fetch API (via Vite Development Proxy)
 - **Styling:** CSS (Scoped styles in components + minimal global styles)
+- **Deployment:** Netlify (with serverless functions)
 
 ## Live Demo
 
-_(Link to your deployed application will go here once deployed - e.g., on Netlify)_
-`[Link to Live Demo](https://zingy-treacle-5b7cb7.netlify.app/)`
+[Link to Live Demo](https://zingy-treacle-5b7cb7.netlify.app/)
 
 ## Screenshot
 
@@ -38,6 +38,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 - Node.js (Version 16.x or higher recommended)
 - npm (usually comes with Node.js) or yarn
+- A Netlify account (for deployment)
 
 ### Installation
 
@@ -92,6 +93,62 @@ Once dependencies are installed and the `.env` file is configured with your API 
 
 The application uses Vite's proxy during development to securely handle the API key and bypass potential CORS issues when calling the API-Ninjas API from `localhost`.
 
+### Deploying to Netlify
+
+This project is configured to use Netlify's serverless functions for secure API calls in production. Follow these steps to deploy:
+
+1. **Install Netlify CLI** (if you haven't already):
+
+   ```bash
+   npm install -g netlify-cli
+   ```
+
+2. **Login to Netlify**:
+
+   ```bash
+   netlify login
+   ```
+
+3. **Link your project** to a Netlify site:
+
+   ```bash
+   netlify link
+   ```
+
+   - Choose "Use current git remote origin" when prompted
+   - Select your site from the list
+
+4. **Create the serverless function**:
+
+   ```bash
+   netlify functions:create
+   ```
+
+   - Choose "Serverless function (Node/Go/Rust)"
+   - Enter `netlify/functions` as the functions directory
+   - Name the function `get-quote`
+
+5. **Set up environment variables** in Netlify:
+
+   - Go to your site's dashboard on Netlify
+   - Navigate to Site settings > Environment variables
+   - Add a new variable:
+     - Key: `API_NINJAS_KEY`
+     - Value: Your API-Ninjas API key
+
+6. **Deploy your site**:
+   ```bash
+   netlify deploy --prod
+   ```
+   Or, if you're using continuous deployment:
+   ```bash
+   git add .
+   git commit -m "Ready for production"
+   git push
+   ```
+
+The application will automatically use the serverless function in production to securely handle API requests, while using the Vite proxy in development.
+
 ### Building for Production
 
 To create a production-ready build (static HTML, CSS, JS files):
@@ -105,8 +162,6 @@ To create a production-ready build (static HTML, CSS, JS files):
     yarn build
     ```
 2.  The output files will be generated in the `dist` directory. These are the files you would deploy to a static web host like Netlify, Vercel, GitHub Pages, etc.
-
-**Note:** The development proxy configured in `vite.config.js` does _not_ work in the production build. For deployment, you would typically need to handle the API call differently, often using a serverless function (like Netlify Functions) to securely manage your API key on the server-side.
 
 ## Project Structure
 
@@ -122,6 +177,9 @@ my-quote-app/
 │   │   └── quoteStore.js # Store for quote data, state, actions
 │   ├── App.vue          # Main application root component
 │   └── main.js          # Application entry point (initializes Vue, Pinia)
+├── netlify/
+│   └── functions/       # Netlify serverless functions
+│       └── get-quote/   # Function for secure API calls
 ├── .env                 # Local environment variables (API Key - DO NOT COMMIT)
 ├── .gitignore           # Files/folders ignored by Git
 ├── index.html           # Main HTML template
