@@ -23,7 +23,7 @@ A simple web application built with Vue.js 3 and Pinia for state management that
 ## Live Demo
 
 _(Link to your deployed application will go here once deployed - e.g., on Netlify)_
-`[Link to Live Demo](YOUR_DEPLOYMENT_LINK_HERE)`
+`[Link to Live Demo](https://zingy-treacle-5b7cb7.netlify.app/)`
 
 ## Screenshot
 

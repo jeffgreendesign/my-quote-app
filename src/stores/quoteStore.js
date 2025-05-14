@@ -37,14 +37,18 @@ export const useQuoteStore = defineStore("quote", () => {
     currentQuote.value = null; // Clear previous quote
 
     try {
-      // *** CHANGED: URL points to our proxy for API Ninjas + limit=1 ***
-      const fetchUrl = "/api/v1/quotes?";
+      // Determine if we're in development or production
+      const isDevelopment = import.meta.env.DEV;
+      const fetchUrl = isDevelopment
+        ? "/api/v1/quotes" // Development: Use Vite proxy
+        : "/.netlify/functions/get-quote"; // Production: Use Netlify function
+
       console.log("Fetching from:", fetchUrl); // Debug log
       const response = await fetch(fetchUrl);
       console.log("Fetch response status:", response.status); // Debug log
 
       if (!response.ok) {
-        // Attempt to read error message from API Ninjas if available
+        // Attempt to read error message from API if available
         let errorData;
         try {
           errorData = await response.json();
@@ -52,24 +56,24 @@ export const useQuoteStore = defineStore("quote", () => {
           // Ignore if response body is not JSON
         }
         const errorMsgDetail =
-          errorData?.message ||
           errorData?.error ||
+          errorData?.message ||
           `Status: ${response.status}`;
         console.error("API Error Response:", errorData); // Debug log
         throw new Error(`API error! ${errorMsgDetail}`);
       }
 
-      const data = await response.json(); // Returns an array: [{ quote, author, category }]
+      const data = await response.json();
       console.log("API Data received:", data); // Debug log
 
-      if (data && data.length > 0) {
-        const quoteData = data[0]; // Get the first (only) quote object
+      // In production, the Netlify function returns a single quote object
+      // In development, we get an array with one quote
+      const quoteData = isDevelopment ? data[0] : data;
 
-        // *** CHANGED: Map response fields (quote, author, category) ***
+      if (quoteData) {
         currentQuote.value = {
           content: quoteData.quote,
           author: quoteData.author || "Unknown", // Default if author is null/empty
-          // *** CHANGED: Map 'category' to 'tags' (as an array) ***
           tags: quoteData.category ? [quoteData.category] : [],
         };
       } else {
